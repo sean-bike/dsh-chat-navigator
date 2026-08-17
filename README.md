@@ -51,8 +51,8 @@ dsh plugin --profile web add "link:D:/prj_dsh_plugin"
 
 ```bash
 # 1. 安装依赖（从 git 拉取，按 tag 固定版本；GitHub 写法见注释）
-dsh plugin --profile web add "git+https://<你的git服务器>/<user>/dsh-chat-navigator.git#v0.1.0"
-#   GitHub 也可简写：dsh plugin --profile web add "github:<user>/dsh-chat-navigator#v0.1.0"
+dsh plugin --profile web add "git+https://github.com/sean-bike/dsh-chat-navigator.git#v0.1.0"
+#   GitHub 也可简写：dsh plugin --profile web add "github:sean-bike/dsh-chat-navigator#v0.1.0"
 
 # 2. 在 web profile 的 cordis.patch.yml 追加行：
 #    - insert:
