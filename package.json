@@ -1,0 +1,32 @@
+{
+  "name": "dsh-chat-navigator",
+  "version": "0.1.0",
+  "description": "dsh plugin: right-edge turn navigator progress bar + collapse whole turns / individual assistant messages in the web chat",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib"
+  ],
+  "dsh": {
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-connection"
+      ],
+      "platform": "web"
+    }
+  },
+  "keywords": [
+    "dsh-plugin",
+    "dsh",
+    "deepseek-harness",
+    "chat",
+    "navigator"
+  ],
+  "license": "MIT"
+}
