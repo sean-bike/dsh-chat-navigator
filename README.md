@@ -20,12 +20,19 @@ DeepSeek Harness (dsh) web plugin — 右侧轮次导航条 + 对话折叠。
    - 有折叠项时圆点簇**不因滚动高度不足而隐藏**（全折叠时簇仍保留，作为展开入口之一）；
    - 折叠状态仅内存（按会话），刷新页面即恢复展开；插件停用自动恢复全部被隐藏的行。
 
+3. **分叉（fork）与家族树（V2）**
+   - **圆点分叉**：悬停卡片「在此分叉」（两步确认）→ 从该轮收尾处 `sessions.fork` → 自动切到子会话；分叉轮圆点右下角显示短横线标记；
+   - **分支子会话列表**：悬停分叉轮，卡片列出子会话（点击打开）；
+   - **家族树面板**：会话头部「🌳 分支树」按钮打开无遮罩浮层，显示当前会话的根→子孙树（纯 client 血缘数据）；节点支持点击切换、面板内分叉（尾部，运行中禁用）、**归档**（移到兄弟末尾 + 删除线）、**物理删除**（内置端点，两步确认）；默认只展开当前路径，ESC/关闭按钮退出；
+   - 分叉标记覆盖**本插件创建 + 官方 fork** 的分叉（官方 fork 通过 `ctx.remote.sessions.history` 分页拉父子日志、公共前缀对比推断分叉边界，缓存一次）。
+
 ## 实现要点
 
-- 纯 client 插件（host 半为 no-op 载体），注册三个加性 Slot：
-  - `conversation.session.header.utilities` → 圆点簇（跳转 + 悬停卡片折叠/展开）；
+- **双端插件**：host 半提供 `POST /chat-navigator/api/delete`（物理删除会话，实现移植自 dsh-session-manager，MIT 署名见 `lib/index.js`）；client 半注册四个加性 Slot：
+  - `conversation.session.header.utilities` → 圆点簇（跳转 + 悬停卡片折叠/分叉）+ 分支树按钮/面板；
   - `conversation.chat.assistant-actions` → 单条助手消息折叠；
   - `conversation.composer.dock` → 已折叠读条（逐项 / 全部展开入口）。
+- **注意**：修改 `lib/index.js`（host 半）后需**重启 dsh web** 才生效；纯 client 改动走 HMR 即时生效。
 - 数据来自 session 标准 kit 的 `useSession`：`chat.order`（节点顺序）+ `chat.nodes.get(key)`（节点 kind/seq/location/data）。
 - 滚动与跳转复用官方机制：`[data-conversation-scroll]` 滚动容器、`[data-chat-anchor-key]` 节点行、`flowTop` 相对定位、直接改 `scrollTop`（锚点簇本身 fixed 固定，不随滚动移动）。
 - 颜色全部使用 `--dsw-alias-*` 主题 token，深浅色自动适配。
