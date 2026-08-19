@@ -1,6 +1,6 @@
 {
   "name": "dsh-chat-navigator",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "dsh plugin: right-edge turn navigator progress bar + collapse whole turns / individual assistant messages in the web chat",
   "type": "module",
   "main": "lib/index.js",
